@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="gc.com.dao.GcUserDao">
+
+    <resultMap type="gc.com.entity.GcUser" id="GcUserMap">
+        <result property="uid" column="uID" jdbcType="INTEGER"/>
+        <result property="uname" column="uName" jdbcType="VARCHAR"/>
+        <result property="usex" column="uSex" jdbcType="VARCHAR"/>
+        <result property="ubirthday" column="uBirthday" jdbcType="TIMESTAMP"/>
+        <result property="utel" column="uTel" jdbcType="VARCHAR"/>
+        <result property="uemail" column="uEmail" jdbcType="VARCHAR"/>
+        <result property="uaddress" column="uAddress" jdbcType="VARCHAR"/>
+        <result property="upwd" column="uPwd" jdbcType="VARCHAR"/>
+        <result property="uimg" column="uImg" jdbcType="VARCHAR"/>
+        <result property="udcb" column="uDcb" jdbcType="VARCHAR"/>
+        <result property="ufb" column="uFb" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="GcUserMap">
+        select
+          uID, uName, uSex, uBirthday, uTel, uEmail, uAddress, uPwd, uImg, uDcb, uFb
+        from gcmysql.gc_user
+        where uID = #{uid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="GcUserMap">
+        select
+          uID, uName, uSex, uBirthday, uTel, uEmail, uAddress, uPwd, uImg, uDcb, uFb
+        from gcmysql.gc_user
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="GcUserMap">
+        select
+          uID, uName, uSex, uBirthday, uTel, uEmail, uAddress, uPwd, uImg, uDcb, uFb
+        from gcmysql.gc_user
+        <where>
+            <if test="uid != null">
+                and uID = #{uid}
+            </if>
+            <if test="uname != null and uname != ''">
+                and uName = #{uname}
+            </if>
+            <if test="usex != null and usex != ''">
+                and uSex = #{usex}
+            </if>
+            <if test="ubirthday != null">
+                and uBirthday = #{ubirthday}
+            </if>
+            <if test="utel != null and utel != ''">
+                and uTel = #{utel}
+            </if>
+            <if test="uemail != null and uemail != ''">
+                and uEmail = #{uemail}
+            </if>
+            <if test="uaddress != null and uaddress != ''">
+                and uAddress = #{uaddress}
+            </if>
+            <if test="upwd != null and upwd != ''">
+                and uPwd = #{upwd}
+            </if>
+            <if test="uimg != null and uimg != ''">
+                and uImg = #{uimg}
+            </if>
+            <if test="udcb != null and udcb != ''">
+                and uDcb = #{udcb}
+            </if>
+            <if test="ufb != null and ufb != ''">
+                and uFb = #{ufb}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="uid" useGeneratedKeys="true">
+        insert into gcmysql.gc_user(uName, uSex, uBirthday, uTel, uEmail, uAddress, uPwd, uImg, uDcb, uFb)
+        values (#{uname}, #{usex}, #{ubirthday}, #{utel}, #{uemail}, #{uaddress}, #{upwd}, #{uimg}, #{udcb}, #{ufb})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update gcmysql.gc_user
+        <set>
+            <if test="uname != null and uname != ''">
+                uName = #{uname},
+            </if>
+            <if test="usex != null and usex != ''">
+                uSex = #{usex},
+            </if>
+            <if test="ubirthday != null">
+                uBirthday = #{ubirthday},
+            </if>
+            <if test="utel != null and utel != ''">
+                uTel = #{utel},
+            </if>
+            <if test="uemail != null and uemail != ''">
+                uEmail = #{uemail},
+            </if>
+            <if test="uaddress != null and uaddress != ''">
+                uAddress = #{uaddress},
+            </if>
+            <if test="upwd != null and upwd != ''">
+                uPwd = #{upwd},
+            </if>
+            <if test="uimg != null and uimg != ''">
+                uImg = #{uimg},
+            </if>
+            <if test="udcb != null and udcb != ''">
+                uDcb = #{udcb},
+            </if>
+            <if test="ufb != null and ufb != ''">
+                uFb = #{ufb},
+            </if>
+        </set>
+        where uID = #{uid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from gcmysql.gc_user where uID = #{uid}
+    </delete>
+
+</mapper>
